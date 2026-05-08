@@ -20,18 +20,34 @@ const logoGrad = { background: `linear-gradient(135deg, ${C.coral}, ${C.violet},
 const wrap = { maxWidth: 800, margin: "0 auto", padding: "0 24px", boxSizing: "border-box" };
 const wrapN = { maxWidth: 600, margin: "0 auto", padding: "0 24px", boxSizing: "border-box" };
 
+// ── Google Apps Script URL（デプロイ後にここを更新）──
+const GAS_URL = "https://script.google.com/macros/s/AKfycbxEPt4VGX6He3Y_zUKu9644gJelco1ZqdDPU_AWZoiFHcAQkElTV_-g5HvQRkSRlU7-/exec";
+
 // ── Landing Page ──
 function Landing({ onDemo }) {
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const [show, setShow] = useState(false);
   useEffect(() => { requestAnimationFrame(() => setShow(true)); }, []);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!email || !role) return;
-    // TODO: connect to backend (Supabase etc.)
-    setSubmitted(true);
+    setLoading(true);
+    setError("");
+    try {
+      await fetch(GAS_URL, {
+        method: "POST",
+        body: JSON.stringify({ email, role }),
+      });
+      setSubmitted(true);
+    } catch {
+      setError("送信に失敗しました。もう一度お試しください。");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -188,10 +204,11 @@ function Landing({ onDemo }) {
             </div>
             <input placeholder="メールアドレス" type="email" value={email} onChange={e => setEmail(e.target.value)}
               style={{ width: "100%", boxSizing: "border-box", padding: "13px 16px", background: C.bgSoft, border: `1.5px solid ${C.border}`, borderRadius: 12, color: C.black, fontSize: 14, fontFamily: font, outline: "none", marginBottom: 10 }} />
-            <button onClick={handleSubmit} disabled={!email || !role}
-              style={{ width: "100%", padding: "14px", fontSize: 14, fontWeight: 700, borderRadius: 12, background: (!email || !role) ? C.bgSoft : C.coral, color: (!email || !role) ? C.light : "#fff", border: "none", cursor: (!email || !role) ? "default" : "pointer", fontFamily: font }}>
-              事前登録する（無料）
+            <button onClick={handleSubmit} disabled={!email || !role || loading}
+              style={{ width: "100%", padding: "14px", fontSize: 14, fontWeight: 700, borderRadius: 12, background: (!email || !role || loading) ? C.bgSoft : C.coral, color: (!email || !role || loading) ? C.light : "#fff", border: "none", cursor: (!email || !role || loading) ? "default" : "pointer", fontFamily: font }}>
+              {loading ? "送信中..." : "事前登録する（無料）"}
             </button>
+            {error && <div style={{ marginTop: 8, fontSize: 12, color: C.coral, textAlign: "center" }}>{error}</div>}
           </div>
         )}
       </section>
