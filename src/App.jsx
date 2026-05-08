@@ -148,9 +148,9 @@ function Landing({ onDemo }) {
           <div style={{ fontSize: 13, fontWeight: 700, color: C.coral, marginBottom: 10 }}>✦ クリエイター向け</div>
           <div style={{ display: "flex", gap: 8, marginBottom: 24, overflowX: "auto" }}>
             {[
-              { name: "Free", price: "¥0", note: "無料招待のみ", color: C.dark },
-              { name: "Pro", price: "¥1,980/月", note: "有償案件OK", color: C.coral },
-              { name: "Elite", price: "¥5,980/月", note: "VIP案件+認定", color: C.violet },
+              { name: "Free", price: "¥0", note: "無料招待に応募", color: C.dark },
+              { name: "Pro", price: "¥980/月", note: "有償案件が解放", color: C.coral },
+              { name: "Elite", price: "¥2,980/月", note: "VIP案件+認定バッジ", color: C.violet },
             ].map(p => (
               <div key={p.name} style={{ flex: 1, minWidth: 0, padding: "14px 12px", background: C.bg, border: `1.5px solid ${C.border}`, borderRadius: 12, textAlign: "center" }}>
                 <div style={{ fontSize: 13, fontWeight: 800, color: p.color, marginBottom: 2 }}>{p.name}</div>
@@ -163,9 +163,9 @@ function Landing({ onDemo }) {
           <div style={{ fontSize: 13, fontWeight: 700, color: C.blue, marginBottom: 10 }}>◆ 施設向け</div>
           <div style={{ display: "flex", gap: 8, overflowX: "auto" }}>
             {[
-              { name: "Light", price: "¥38,000/月", note: "無料招待 月1件", color: C.blue },
-              { name: "Standard", price: "¥58,000/月", note: "有償+自動レポート", color: C.coral },
-              { name: "Premium", price: "¥98,000/月", note: "無制限+コンサル", color: C.violet },
+              { name: "Light", price: "¥29,800/月", note: "まずはお試し", color: C.blue },
+              { name: "Standard", price: "¥49,800/月", note: "自動化フル活用", color: C.coral },
+              { name: "Premium", price: "¥98,000/月", note: "無制限+指名+優先", color: C.violet },
             ].map(p => (
               <div key={p.name} style={{ flex: 1, minWidth: 0, padding: "14px 12px", background: C.bg, border: `1.5px solid ${C.border}`, borderRadius: 12, textAlign: "center" }}>
                 <div style={{ fontSize: 13, fontWeight: 800, color: p.color, marginBottom: 2 }}>{p.name}</div>
@@ -174,6 +174,7 @@ function Landing({ onDemo }) {
               </div>
             ))}
           </div>
+          <p style={{ fontSize: 10, color: C.muted, textAlign: "right", margin: "8px 0 0" }}>施設向け料金はすべて税別</p>
         </div>
       </section>
 
@@ -378,9 +379,9 @@ function DAuth({ onAuth }) {
 function DSetup({ authData, onDone, onBack }) {
   const [plan, setPlan] = useState("free");
   const plans = [
-    { id: "free", name: "Free", price: "¥0", color: C.dark, note: "無料招待のみ" },
-    { id: "pro", name: "Pro", price: "¥1,980/月", color: C.coral, note: "有償案件OK" },
-    { id: "elite", name: "Elite", price: "¥5,980/月", color: C.violet, note: "VIP+認定" },
+    { id: "free", name: "Free", price: "¥0", color: C.dark, note: "無料招待に応募（月3件まで）" },
+    { id: "pro", name: "Pro", price: "¥980/月", color: C.coral, note: "有償案件が解放（月10件まで）" },
+    { id: "elite", name: "Elite", price: "¥2,980/月", color: C.violet, note: "VIP案件+認定バッジ（無制限）" },
   ];
   return (
     <div style={{ minHeight: "100vh", background: C.bg, padding: "20px 0 32px", fontFamily: font }}>
@@ -429,7 +430,7 @@ function DDash({ user, onLogout }) {
         <div style={dwrap}>
           <button onClick={() => setShowUp(false)} style={{ background: "none", border: "none", color: C.coral, cursor: "pointer", fontSize: 13, fontWeight: 600, padding: "8px 0", fontFamily: font }}>← 戻る</button>
           <h2 style={{ fontSize: 18, fontWeight: 700, margin: "12px 0 16px" }}>プランをアップグレード</h2>
-          {[{ id: "pro", name: "Pro", price: "¥1,980/月", color: C.coral, note: "有償案件（¥5,000〜）に応募可能" }, { id: "elite", name: "Elite", price: "¥5,980/月", color: C.violet, note: "VIP案件＋認定バッジ＋応募無制限" }].map(p => (
+          {[{ id: "pro", name: "Pro", price: "¥980/月", color: C.coral, note: "有償案件（¥5,000〜¥30,000）に応募可能" }, { id: "elite", name: "Elite", price: "¥2,980/月", color: C.violet, note: "VIP案件（〜¥50,000）＋認定バッジ＋応募無制限" }].map(p => (
             <div key={p.id} style={{ padding: "16px", background: `${p.color}11`, border: `2px solid ${p.color}`, borderRadius: 14, marginBottom: 10 }}>
               <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}><span style={{ fontWeight: 800, color: p.color }}>{p.name}</span><span style={{ fontWeight: 700 }}>{p.price}</span></div>
               <div style={{ fontSize: 11, color: C.mid }}>{p.note}</div>
